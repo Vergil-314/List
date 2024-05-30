@@ -95,6 +95,39 @@ class List (params int[] array) : IEnumerable
         }
     }
 
+    public void Sort()
+    {
+        if (IsEmpty)
+            return;
+
+        int[] soted_list = new int[Lenght];
+        int len = Lenght;
+        int index;
+
+        for (uint i = 0; i < len; i++)
+        {
+            (soted_list[i], index) = _Min();
+            Delete(index);
+        }
+
+        list = soted_list;
+
+    }
+
+    private (int min_value, int index) _Min()
+    {
+        int min = list[0];
+        int min_index = 0;
+
+        for (int i = 0; i < Lenght; i++)
+            if (list[i] < min)
+            {
+                min = list[i];
+                min_index = i;
+            }
+        return (min, min_index);
+    }
+
     public int Add(int index = 0, int sum = 0)
     {
         if (++index >= Lenght)
