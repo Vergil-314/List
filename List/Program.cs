@@ -11,13 +11,7 @@ class Program
     static void Main()
     {
         //List<int> norm_list = new List<int> { 1, 2, 2, 4, 5 };
-        List list = new(1,2,3,4,5);
-
-
-        int sum = list.Add();
-
-        Console.WriteLine(sum);
-
+        List list = new(5, 2, 34, 987, 90, 7);
     }
 }
 
@@ -36,7 +30,7 @@ class List (params int[] array) : IEnumerable
 
     #region Properties
 
-    private bool IsEmpty { get => (list != null); }
+    private bool IsEmpty { get => (Lenght <= 0); }
 
     public int Lenght { get => list.Length; }
 
@@ -78,40 +72,28 @@ class List (params int[] array) : IEnumerable
         return false;
     }
 
-    #region Sort
-    public void Sort()
+    public void Bubble_Sort()
     {
         if (IsEmpty)
             return;
 
-        int[] soted_list = new int[Lenght];
-        int len = Lenght;
-        int index;
+        bool Swaped; // Змінна для визначення, чи було хоть раз зроблено перенесення. Якщо ні, тоді return
 
-        for (uint i = 0; i < len; i++)
+        for (int j = 1; j < Lenght; j++)
         {
-            (soted_list[i], index) = _Min();
-            Delete(index);
+            Swaped = false;
+
+            for (int i = 0; i < Lenght - j; i++)
+                if (list[i + 1] < list[i])
+                {
+                    (list[i], list[i + 1]) = (list[i + 1], list[i]);
+                    Swaped = true;
+                }
+
+            if (!Swaped)
+                return;
         }
-
-        list = soted_list;
-
     }
-
-    private (int min_value, int index) _Min()
-    {
-        int min = list[0];
-        int min_index = 0;
-
-        for (int i = 0; i < Lenght; i++)
-            if (list[i] < min)
-            {
-                min = list[i];
-                min_index = i;
-            }
-        return (min, min_index);
-    }
-    #endregion
 
     public int Add(int index = 0, int sum = 0)
     {
@@ -176,16 +158,14 @@ class List (params int[] array) : IEnumerable
             }
     }
 
-    public void Set_by_Random(uint count, int min_value, int max_value, uint start_index = 0)
+    public void Random(uint count, int min_value = 0, int max_value = 100)
     {
         Random random = new();
 
-        int[] array = new int[count];
+        list = new int[count];
 
-        for (; start_index < array.Length; start_index++)
-            array[start_index] = random.Next(min_value, max_value + 1);
-
-        list = array;
+        for (int i = 0; i < count; i++)
+            list[i] = random.Next(min_value, max_value + 1);
     }
 
     public IEnumerator GetEnumerator()
