@@ -2,22 +2,6 @@
 
 namespace List;
 
-
-
-class Program
-{
-
-
-    static void Main()
-    {
-        //List<int> norm_list = new List<int> { 1, 2, 2, 4, 5 };
-        List list = new(5, 2, 34, 987, 90, 7);
-    }
-}
-
-
-
-
 class List (params int[] array) : IEnumerable
 {
     private int[] list = array;
@@ -163,7 +147,7 @@ class List (params int[] array) : IEnumerable
     public void Display()
     {
         foreach (int i in list)
-            Console.Write(i + " ");
+            Console.Write(i + ", ");
 
         Console.WriteLine();
     }
